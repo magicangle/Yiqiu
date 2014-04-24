@@ -1,1 +1,12 @@
 github上别人整理到的开源项目列表：https://github.com/Trinea/android-open-project
+解析JSON可以使用fastjson包
+
+扫描二维码登录原理：
+了解oauth2.0原理，移动端微信已经登录，获得access_token，
+
+再与扫描的二维码中的字符串进行组合编码，发送给服务器，
+
+服务器给浏览器网页的监听器发送消息，网页解析消息，并得到access_token，实现登录。
+
+二维码只是充当一个掩码作用...
+
