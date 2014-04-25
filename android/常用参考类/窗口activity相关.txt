@@ -1,0 +1,47 @@
+设置大小可以参考以下代码：
+WindowManager m = getWindowManager();
+        Display d = m.getDefaultDisplay();  //为获取屏幕宽、高 
+        LayoutParams p = getWindow().getAttributes();  //获取对话框当前的参数值
+        p.height = (int) (d.getHeight() * 0.8);   //高度设置为屏幕的1.0
+        p.width = (int) (d.getWidth() * 0.7);    //宽度设置为屏幕的0.8 
+        p.alpha = 1.0f;      //设置本身透明度
+        p.dimAmount = 0.0f;      //设置黑暗度
+        
+        getWindow().setAttributes(p);     //设置生效
+        getWindow().setGravity(Gravity.CENTER); 
+        
+        
+
+
+
+将Activity设置成窗口的样式实现Dialog或者Popupwindow效果在开发中是很常用的一种方式，在AndroidMenifest.xml中将需要设置的Activity增加android:theme="@android:style/Theme.Dialog"属性即可。但是窗口化的Activity有个问题就是:点击窗口空白处Activity会finish。如何避免这个问题呢，办法如下：
+一、如果API Level>=11有两种方式：
+1、
+res\values\styles.xml
+<resources>  
+    <style name="Theme.SoundRecorder" parent="@android:style/Theme.Holo.DialogWhenLarge">  
+        <item name="android:windowCloseOnTouchOutside">false</item>  
+    </style>  
+</resources>  
+
+
+2、
+YourActivity.this.setFinishOnTouchOutside(false);  
+
+二、如果API Level<11
+[java] view plaincopy
+@Override  
+    public boolean onTouchEvent(MotionEvent event) {  
+        if (event.getAction() == MotionEvent.ACTION_DOWN && isOutOfBounds(this, event)) {  
+            return true;  
+        }  
+        return super.onTouchEvent(event);  
+    }  
+  
+    private boolean isOutOfBounds(Activity context, MotionEvent event) {  
+        final int x = (int) event.getX();  
+        final int y = (int) event.getY();  
+        final int slop = ViewConfiguration.get(context).getScaledWindowTouchSlop();  
+        final View decorView = context.getWindow().getDecorView();  
+        return (x < -slop) || (y < -slop)|| (x > (decorView.getWidth() + slop))|| (y > (decorView.getHeight() + slop));  
+    }  

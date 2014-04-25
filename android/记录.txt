@@ -10,3 +10,6 @@ github上别人整理到的开源项目列表：https://github.com/Trinea/android-open-project
 
 二维码只是充当一个掩码作用...
 
+第三方授权的项目在github上也有个开源的，搜索shareSDK。
+
+一般应用使用单例模式的话在application初始化的时候初始化，即重写应有的Application。
