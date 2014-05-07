@@ -491,4 +491,63 @@ public class StringUtils {
     public static String nullStrToEmpty(String str) {
         return (str == null ? "" : str);
     }
+    
+    //http://blog.csdn.net/h7870181/article/details/8480452
+    public static String[] getIpAndLocation(){
+        StringBuffer strForeignIP =new StringBuffer("strForeignIPUnkown");  
+        StringBuffer strLocation =new StringBuffer("strLocationUnkown");
+        try {  
+            
+            URL url = new URL("http://www.cz88.net/ip/viewip778.aspx");  
+   
+            BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream(), "gb2312"));  
+   
+            String s = "";  
+            StringBuffer sb = new StringBuffer("");  
+            while ((s = br.readLine()) != null) {  
+             sb.append(s + "\r\n");  
+            }  
+            br.close();  
+              
+            String webContent = "";  
+            webContent = sb.toString();  
+              
+            if( webContent.equals(null)|| webContent.equals("") ) return null;  
+             
+              
+              
+            String flagofForeignIPString ="IPMessage";  
+            int startIP = webContent.indexOf(flagofForeignIPString)+flagofForeignIPString.length()+2;  
+            int endIP = webContent.indexOf("</span>",startIP);  
+            strForeignIP.delete(0, webContent.length());  
+            strForeignIP.append(webContent.substring(startIP,endIP));  
+            
+            String flagofLocationString ="AddrMessage";  
+            int startLoc = webContent.indexOf(flagofLocationString)+flagofLocationString.length()+2;  
+            int endLoc = webContent.indexOf("</span>",startLoc);  
+            strLocation.delete(0, webContent.length());  
+            strLocation.append(webContent.substring(startLoc,endLoc)); 
+            return new String[]{String.valueOf(strForeignIP), getCity(String.valueOf(strLocation))};
+
+        } catch (Exception e) {  
+            //e.printStackTrace();  
+        }
+        return null;
+    }
+
+    public static String getCity(String address){
+        if (address.startsWith("北")||address.startsWith("上")||address.startsWith("重")){
+            return address.substring(0,address.indexOf("市"));
+            }
+        if(address.startsWith("香")){
+            return address.substring(0,address.indexOf("港"));
+            }
+        if(address.startsWith("澳")){
+            return address.substring(0,address.indexOf("门"));
+            }
+        if (address.indexOf("省") != -1) {
+            return address.substring(address.indexOf("省") + 1, address.indexOf("市"));
+        }
+        return null;
+    }
 }

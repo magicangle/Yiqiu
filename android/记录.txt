@@ -1,6 +1,7 @@
 github上别人整理到的开源项目列表：https://github.com/Trinea/android-open-project
+===========
 解析JSON可以使用fastjson包
-
+===========
 扫描二维码登录原理：
 了解oauth2.0原理，移动端微信已经登录，获得access_token，
 
@@ -10,6 +11,32 @@ github上别人整理到的开源项目列表：https://github.com/Trinea/android-open-project
 
 二维码只是充当一个掩码作用...
 
+===========
 第三方授权的项目在github上也有个开源的，搜索shareSDK。
 
+===========
 一般应用使用单例模式的话在application初始化的时候初始化，即重写应有的Application。
+
+===========
+选项卡框架比较好的一个实现：http://blog.csdn.net/zjlovety/article/details/21519205
+这个实现不是很好，没有使用v4包，可以更改为v4包的fragment，然后里面的changed事件的index是错的，应该使用id进行匹配。
+在主界面方面，根据需要可能要使用不同的布局方式。
+
+===========
+
+Eclipse下注释模板的设置文档http://blog.csdn.net/security08/article/details/5588013
+在你需要添加注释的地方点击Sources->Ganarate Element Comment,或者使用快捷键 Alt+Shift+J ，则 eclipse 自动在该类前面添加注释。
+
+===========
+GL11是GL10的subclass子类。viewroot其实也是用gl实现的。
+焦点原理在Android里是focusFinder类管理，viewroot下遍历所有可以获取的焦点的view,再在设置到同一坐标系进行管理。
+
+===========
+ThreadLocal（http://my.oschina.net/lichhao/blog/111362）
+synchronized这类线程同步的机制可以解决多线程并发问题，在这种解决方案下，多个线程访问到的，都是同一份变量的内容。为了防止在多线程访问的过程中，可能会出现的并发错误。不得不对多个线程的访问进行同步，这样也就意味着，多个线程必须先后对变量的值进行访问或者修改，这是一种以延长访问时间来换取线程安全性的策略。
+
+而ThreadLocal类为每一个线程都维护了自己独有的变量拷贝。每个线程都拥有了自己独立的一个变量，竞争条件被彻底消除了，那就没有任何必要对这些线程进行同步，它们也能最大限度的由CPU调度，并发执行。并且由于每个线程在访问该变量时，读取和修改的，都是自己独有的那一份变量拷贝，变量被彻底封闭在每个访问的线程中，并发错误出现的可能也完全消除了。对比前一种方案，这是一种以空间来换取线程安全性的策略。
+
+没有什么魔法，在这个方法内部我们看到，首先通过getMap(Thread t)方法获取一个和当前线程相关的ThreadLocalMap，然后将变量的值设置到这个ThreadLocalMap对象中，当然如果获取到的ThreadLocalMap对象为空，就通过createMap方法创建。
+
+===========
